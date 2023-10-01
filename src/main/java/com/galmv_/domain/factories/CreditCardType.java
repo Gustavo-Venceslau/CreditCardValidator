@@ -1,4 +1,4 @@
-package creditCardValidatition.factories;
+package com.galmv_.domain.factories;
 
 public enum CreditCardType {
     COMMON_CREDIT_CARD,
