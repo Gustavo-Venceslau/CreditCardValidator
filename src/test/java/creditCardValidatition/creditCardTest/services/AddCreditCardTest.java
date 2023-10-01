@@ -6,16 +6,15 @@ import com.galmv_.domain.dtos.AddCreditCardDTO;
 import com.galmv_.domain.exceptions.InvalidCVVException;
 import com.galmv_.domain.exceptions.InvalidCreditCardFANException;
 import com.galmv_.domain.exceptions.InvalidExpiryDateException;
-import com.galmv_.domain.factories.CreditCardType;
 import com.galmv_.domain.services.AddCreditCardService;
-import creditCardValidatition.ConfigUnitTest;
+import creditCardValidatition.config.UnitTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class AddCreditCardTest extends ConfigUnitTest {
+public class AddCreditCardTest extends UnitTestConfig {
 
     @Autowired
     private AddCreditCardService service;
@@ -26,7 +25,7 @@ public class AddCreditCardTest extends ConfigUnitTest {
 
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/24", CreditCardType.AMERICAN_EXPRESS_CARD);
+                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         CreditCard creditCard = service.add(creditCardDTO);
 
@@ -38,7 +37,7 @@ public class AddCreditCardTest extends ConfigUnitTest {
     public void testFailAddCreditCardWithWrongCVV(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("123", "3784533587163356", "Gustavo de Almeida", "08/24", CreditCardType.AMERICAN_EXPRESS_CARD);
+                AddCreditCardDTO("123", "3784533587163356", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidCVVException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_CVV_LENGTH);
@@ -49,7 +48,7 @@ public class AddCreditCardTest extends ConfigUnitTest {
     public void testFailAddCreditCardWithWrongFANLength(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "378453358716335", "Gustavo de Almeida", "08/24", CreditCardType.AMERICAN_EXPRESS_CARD);
+                AddCreditCardDTO("1234", "378453358716335", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidCreditCardFANException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_CREDIT_CARD_FAN_LENGTH);
@@ -60,7 +59,7 @@ public class AddCreditCardTest extends ConfigUnitTest {
     public void testFailAddCreditCardWithWrongExpiryDate(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/19", CreditCardType.AMERICAN_EXPRESS_CARD);
+                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/19", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidExpiryDateException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE);

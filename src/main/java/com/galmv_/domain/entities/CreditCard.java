@@ -18,7 +18,7 @@ public abstract class CreditCard {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(nullable = false, unique = true)
-    private String PAN;
+    private String FAN;
     @Column(nullable = false)
     private String CVV;
     @Column(nullable = false)

@@ -24,23 +24,23 @@ public class CreditCardFactory {
     public CreditCard getCreditCard(AddCreditCardDTO creditCard){
         Calendar expiryDate = ConvertExpiryDateToCalendar.convert(creditCard.expiryDate());
 
-        if(creditCard.type() == CreditCardType.COMMON_CREDIT_CARD){
+        if(CreditCardType.valueOf(creditCard.type()) == CreditCardType.COMMON_CREDIT_CARD){
             commonCardValidator.validate(creditCard);
 
             return CommonCreditCard.CommonCreditBuilder()
                     .CVV(creditCard.CVV())
-                    .PAN(creditCard.FAN())
+                    .FAN(creditCard.FAN())
                     .ownerName(creditCard.ownerName())
                     .expiryDate(expiryDate)
                     .build();
         }
 
-        if(creditCard.type() == CreditCardType.AMERICAN_EXPRESS_CARD){
+        if(CreditCardType.valueOf(creditCard.type()) == CreditCardType.AMERICAN_EXPRESS_CARD){
             americanExpressValidator.validate(creditCard);
 
             return AmericanExpress.AmericanExpressCardBuilder()
                     .CVV(creditCard.CVV())
-                    .PAN(creditCard.FAN())
+                    .FAN(creditCard.FAN())
                     .ownerName(creditCard.ownerName())
                     .expiryDate(expiryDate)
                     .build();

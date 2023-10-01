@@ -13,7 +13,7 @@ import java.util.UUID;
 public class CommonCreditCard extends CreditCard {
 
     @Builder(builderMethodName = "CommonCreditBuilder")
-    public CommonCreditCard(UUID id, String PAN, String CVV, String ownerName, Calendar expiryDate) {
-        super(id, PAN, CVV, ownerName, expiryDate);
+    public CommonCreditCard(UUID id, String FAN, String CVV, String ownerName, Calendar expiryDate) {
+        super(id, FAN, CVV, ownerName, expiryDate);
     }
 }

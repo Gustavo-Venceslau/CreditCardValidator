@@ -5,4 +5,4 @@ import com.galmv_.domain.factories.CreditCardType;
 import java.util.Calendar;
 import java.util.Date;
 
-public record AddCreditCardDTO(String CVV, String FAN, String ownerName, String expiryDate, CreditCardType type){};
+public record AddCreditCardDTO(String CVV, String FAN, String ownerName, String expiryDate, String type){};

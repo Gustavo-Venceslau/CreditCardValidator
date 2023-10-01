@@ -1,13 +1,13 @@
 package creditCardValidatition.creditCardTest;
 
-import creditCardValidatition.ConfigUnitTest;
+import creditCardValidatition.config.UnitTestConfig;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class CreditCardClassTest extends ConfigUnitTest {
+public class CreditCardClassTest extends UnitTestConfig {
 
     @Test
     @DisplayName("should to be able to instantiate a new american express credit card object")
@@ -15,7 +15,7 @@ public class CreditCardClassTest extends ConfigUnitTest {
 
         assertThat(americanExpressCard.getId()).isNotNull();
         assertThat(americanExpressCard.getCVV()).isNotNull();
-        assertThat(americanExpressCard.getPAN()).isNotNull();
+        assertThat(americanExpressCard.getFAN()).isNotNull();
         assertThat(americanExpressCard.getOwnerName()).isNotNull();
         assertThat(americanExpressCard.getExpiryDate()).isNotNull();
     }
@@ -26,7 +26,7 @@ public class CreditCardClassTest extends ConfigUnitTest {
 
         assertThat(commonCreditCard.getId()).isNotNull();
         assertThat(commonCreditCard.getCVV()).isNotNull();
-        assertThat(commonCreditCard.getPAN()).isNotNull();
+        assertThat(commonCreditCard.getFAN()).isNotNull();
         assertThat(commonCreditCard.getOwnerName()).isNotNull();
         assertThat(commonCreditCard.getExpiryDate()).isNotNull();
     }

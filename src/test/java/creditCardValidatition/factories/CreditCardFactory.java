@@ -22,7 +22,7 @@ public class CreditCardFactory {
             return CommonCreditCard.CommonCreditBuilder()
                     .id(UUID.randomUUID())
                     .CVV("123")
-                    .PAN("5425233430109903")
+                    .FAN("5425233430109903")
                     .ownerName("Gustavo de Almeida")
                     .expiryDate(expiryDate)
                     .build();
@@ -31,7 +31,7 @@ public class CreditCardFactory {
             return AmericanExpress.AmericanExpressCardBuilder()
                     .id(UUID.randomUUID())
                     .CVV("123")
-                    .PAN("5425233430109903")
+                    .FAN("5425233430109903")
                     .ownerName("Gustavo de Almeida")
                     .expiryDate(expiryDate)
                     .build();
