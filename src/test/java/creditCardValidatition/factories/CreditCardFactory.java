@@ -31,7 +31,7 @@ public class CreditCardFactory {
             return AmericanExpress.AmericanExpressCardBuilder()
                     .id(UUID.randomUUID())
                     .CVV("123")
-                    .FAN("5425233430109903")
+                    .FAN("3435795745691326")
                     .ownerName("Gustavo de Almeida")
                     .expiryDate(expiryDate)
                     .build();

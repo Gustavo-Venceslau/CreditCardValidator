@@ -25,7 +25,7 @@ public class AddCreditCardTest extends UnitTestConfig {
 
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("1234", "3440215794378998", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         CreditCard creditCard = service.add(creditCardDTO);
 
@@ -37,7 +37,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddCreditCardWithWrongCVV(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("123", "3784533587163356", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("123", "3440215794378997", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidCVVException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_CVV_LENGTH);
@@ -48,7 +48,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddCreditCardWithWrongFANLength(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "378453358716335", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("1234", "344021579437899", "Gustavo de Almeida", "08/24", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidCreditCardFANException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_CREDIT_CARD_FAN_LENGTH);
@@ -59,7 +59,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddCreditCardWithWrongExpiryDate(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3784533587163356", "Gustavo de Almeida", "08/19", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("1234", "3440215794378996", "Gustavo de Almeida", "08/19", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidExpiryDateException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE);
