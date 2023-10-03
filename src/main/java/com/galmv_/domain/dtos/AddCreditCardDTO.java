@@ -1,8 +1,20 @@
 package com.galmv_.domain.dtos;
 
-import com.galmv_.domain.factories.CreditCardType;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
-import java.util.Calendar;
-import java.util.Date;
-
-public record AddCreditCardDTO(String CVV, String FAN, String ownerName, String expiryDate, String type){};
+public record AddCreditCardDTO
+        (
+                @NotEmpty(message = "The CVV field cannot be empty!")
+                @Size(min = 3, max = 4, message = "The CVV field must have the correct length!")
+                String CVV,
+                @NotEmpty(message = "The FAN field cannot be empty!")
+                @Size(min = 16, max = 19, message = "The FAN field must have the correct length!")
+                String FAN,
+                @NotEmpty(message = "The Owner Name field cannot be empty!")
+                String ownerName,
+                @NotEmpty(message = "The Expiry Date field cannot be empty!")
+                String expiryDate,
+                @NotEmpty(message = "The Type field cannot be empty!")
+                String type
+        ){};

@@ -3,6 +3,7 @@ package com.galmv_.domain.controllers;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
 import com.galmv_.domain.entities.CreditCard;
 import com.galmv_.domain.services.AddCreditCardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AddCreditCardController {
     private final AddCreditCardService service;
 
     @PostMapping
-    public ResponseEntity<CreditCard> add(@RequestBody AddCreditCardDTO creditCard){
+    public ResponseEntity<CreditCard> add(@RequestBody @Valid AddCreditCardDTO creditCard){
         try {
             CreditCard creditCardCreated = service.add(creditCard);
 
