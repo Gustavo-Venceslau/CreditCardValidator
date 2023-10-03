@@ -5,14 +5,14 @@ import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
 import com.galmv_.domain.entities.AmericanExpress;
 import com.galmv_.domain.entities.CommonCreditCard;
-import com.galmv_.domain.exceptions.InvalidCreditCardTypeException;
+import com.galmv_.domain.exceptions.custom.InvalidCreditCardTypeException;
 import com.galmv_.domain.services.AmericanExpressCreditCardValidator;
 import com.galmv_.domain.services.CommonCreditCardValidator;
-import com.galmv_.domain.utils.ConvertExpiryDateToCalendar;
+import com.galmv_.domain.utils.ConvertExpiryDateToLocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +22,7 @@ public class CreditCardFactory {
     private final CommonCreditCardValidator commonCardValidator;
 
     public CreditCard getCreditCard(AddCreditCardDTO creditCard){
-        Calendar expiryDate = ConvertExpiryDateToCalendar.convert(creditCard.expiryDate());
+        LocalDate expiryDate = ConvertExpiryDateToLocalDate.convert(creditCard.expiryDate());
 
         if(CreditCardType.valueOf(creditCard.type()) == CreditCardType.COMMON_CREDIT_CARD){
             commonCardValidator.validate(creditCard);

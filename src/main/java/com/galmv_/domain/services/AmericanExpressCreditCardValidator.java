@@ -2,14 +2,14 @@ package com.galmv_.domain.services;
 
 import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
-import com.galmv_.domain.exceptions.InvalidCVVException;
-import com.galmv_.domain.exceptions.InvalidCreditCardFANException;
-import com.galmv_.domain.exceptions.InvalidExpiryDateException;
-import com.galmv_.domain.utils.ConvertExpiryDateToCalendar;
+import com.galmv_.domain.exceptions.custom.InvalidCVVException;
+import com.galmv_.domain.exceptions.custom.InvalidCreditCardFANException;
+import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
+import com.galmv_.domain.utils.ConvertExpiryDateToLocalDate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class AmericanExpressCreditCardValidator {
@@ -46,11 +46,11 @@ public class AmericanExpressCreditCardValidator {
     }
 
     private boolean validateCreditCardExpiryDate(String expiryDate){
-        Calendar today = Calendar.getInstance();
+        LocalDate today = LocalDate.now();
 
-        Calendar convertedExpiryDate = ConvertExpiryDateToCalendar.convert(expiryDate);
+        LocalDate convertedExpiryDate = ConvertExpiryDateToLocalDate.convert(expiryDate);
 
-        if(!convertedExpiryDate.after(today)){
+        if(!convertedExpiryDate.isAfter(today)){
             throw new InvalidExpiryDateException(Errors.INVALID_EXPIRY_DATE);
         }
         return true;

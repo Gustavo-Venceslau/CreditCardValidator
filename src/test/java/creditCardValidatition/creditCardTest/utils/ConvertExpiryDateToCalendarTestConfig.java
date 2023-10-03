@@ -1,11 +1,12 @@
 package creditCardValidatition.creditCardTest.utils;
 
-import com.galmv_.domain.utils.ConvertExpiryDateToCalendar;
+import com.galmv_.domain.utils.ConvertExpiryDateToLocalDate;
 import creditCardValidatition.config.UnitTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Month;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -16,8 +17,8 @@ public class ConvertExpiryDateToCalendarTestConfig extends UnitTestConfig {
     public void testSuccessConvertExpiryDate(){
         String expiryDate = "08/29";
 
-        Calendar convertedExpiredDate = ConvertExpiryDateToCalendar.convert(expiryDate);
+        LocalDate convertedExpiredDate = ConvertExpiryDateToLocalDate.convert(expiryDate);
 
-        assertThat(convertedExpiredDate.get(Calendar.MONTH)).isEqualTo(Calendar.AUGUST);
+        assertThat(convertedExpiredDate.getMonth()).isEqualTo(Month.AUGUST);
     }
 }

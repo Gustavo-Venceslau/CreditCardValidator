@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -26,5 +27,5 @@ public abstract class CreditCard {
     @Column(nullable = false)
     private String ownerName;
     @Column(nullable = false)
-    private Calendar expiryDate;
+    private LocalDate expiryDate;
 }

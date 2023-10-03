@@ -4,19 +4,17 @@ import com.galmv_.domain.entities.CreditCard;
 import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.entities.AmericanExpress;
 import com.galmv_.domain.entities.CommonCreditCard;
-import com.galmv_.domain.exceptions.InvalidCreditCardTypeException;
+import com.galmv_.domain.exceptions.custom.InvalidCreditCardTypeException;
 import com.galmv_.domain.factories.CreditCardType;
 
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 public class CreditCardFactory {
 
     public static CreditCard getCreditCard(CreditCardType type){
-        Calendar expiryDate = Calendar.getInstance();
-
-        expiryDate.add(Calendar.YEAR, 5);
+        LocalDate expiryDate = LocalDate.now().plusYears(5);;
 
         if(type == CreditCardType.COMMON_CREDIT_CARD){
             return CommonCreditCard.CommonCreditBuilder()
