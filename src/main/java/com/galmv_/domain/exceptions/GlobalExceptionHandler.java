@@ -1,8 +1,10 @@
 package com.galmv_.domain.exceptions;
 
+import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
 import com.galmv_.domain.exceptions.custom.InvalidCVVException;
 import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
+import com.galmv_.domain.exceptions.custom.InvalidExpiryDateNumberException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 new ExceptionResponse(
-                    "Bad Request! consult the documentation",
+                    "Incorrect information, please enter a valid credit card!",
                     LocalDateTime.now().toString(),
                     HttpStatus.BAD_REQUEST.value(),
                     exception.getClass().toString(),
@@ -46,7 +49,24 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 new ExceptionResponse(
-                        "Bad Request! consult the documentation",
+                        Errors.INVALID_EXPIRY_DATE,
+                        LocalDateTime.now().toString(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        exception.getClass().toString(),
+                        errors
+                ), HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(InvalidExpiryDateNumberException.class)
+    public ResponseEntity<ExceptionResponse> handlerDateTimeParseException(InvalidExpiryDateNumberException exception){
+        Map<String, String> errors = new HashMap<>();
+
+        errors.put("expiryDate", exception.getMessage());
+
+        return new ResponseEntity<>(
+                new ExceptionResponse(
+                        Errors.INVALID_EXPIRY_DATE_NUMBER,
                         LocalDateTime.now().toString(),
                         HttpStatus.BAD_REQUEST.value(),
                         exception.getClass().toString(),
@@ -63,7 +83,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 new ExceptionResponse(
-                        "Bad Request! consult the documentation",
+                        Errors.INVALID_CVV_LENGTH,
                         LocalDateTime.now().toString(),
                         HttpStatus.BAD_REQUEST.value(),
                         exception.getClass().toString(),
@@ -80,7 +100,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 new ExceptionResponse(
-                        "Bad Request! consult the documentation",
+                        Errors.CREDIT_CARD_ALREADY_EXITS,
                         LocalDateTime.now().toString(),
                         HttpStatus.BAD_REQUEST.value(),
                         exception.getClass().toString(),

@@ -5,6 +5,7 @@ import com.galmv_.domain.dtos.AddCreditCardDTO;
 import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
 import com.galmv_.domain.exceptions.custom.InvalidCVVException;
 import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
+import com.galmv_.domain.exceptions.custom.InvalidExpiryDateNumberException;
 import com.galmv_.domain.services.AddCreditCardService;
 import creditCardValidatition.config.IntegrationTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -175,6 +176,30 @@ public class AddCreditCardControllerTest extends IntegrationTestConfig {
                 )
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidExpiryDateException))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @DisplayName("should not to able to add a new credit card in /payment/creditCard if expiry date number is invalid")
+    public void TestFailAddCreditCardWithWrongExpiryDateNumber() throws Exception {
+
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO(
+                "1234",
+                "3784533587163356",
+                "Gustavo de Almeida",
+                "2019-00-01",
+                "AMERICAN_EXPRESS_CARD");
+
+        String creditCardDTOMapped = mapper.writeValueAsString(creditCardDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/payment/creditCard")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(creditCardDTOMapped)
+                )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidExpiryDateNumberException))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

@@ -3,10 +3,7 @@ package creditCardValidatition.creditCardTest.services;
 import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.entities.CreditCard;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
-import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
-import com.galmv_.domain.exceptions.custom.InvalidCVVException;
-import com.galmv_.domain.exceptions.custom.InvalidCreditCardFANException;
-import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
+import com.galmv_.domain.exceptions.custom.*;
 import com.galmv_.domain.services.AddCreditCardService;
 import creditCardValidatition.config.UnitTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -90,5 +87,16 @@ public class AddCreditCardTest extends UnitTestConfig {
 
         assertThatExceptionOfType(InvalidExpiryDateException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE);
+    }
+
+    @Test
+    @DisplayName("should not to be able to add a credit card if this one have wrong expiry date number")
+    public void testFailAddCreditCardWithWrongExpiryDateNumber(){
+
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO("1234", "3440215794378996", "Gustavo de Almeida", "2024-00-01", "AMERICAN_EXPRESS_CARD");
+
+        assertThatExceptionOfType(InvalidExpiryDateNumberException.class).isThrownBy(() ->
+                service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE_NUMBER);
     }
 }
