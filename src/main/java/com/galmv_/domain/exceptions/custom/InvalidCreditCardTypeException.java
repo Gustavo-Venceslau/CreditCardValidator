@@ -1,4 +1,4 @@
-package com.galmv_.domain.exceptions;
+package com.galmv_.domain.exceptions.custom;
 
 import java.io.Serial;
 
