@@ -25,16 +25,10 @@ public class AddCreditCardController {
 
     @PostMapping
     public ResponseEntity<CreditCard> add(@RequestBody @Valid AddCreditCardDTO creditCard){
-        try {
             CreditCard creditCardCreated = service.add(creditCard);
 
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(creditCardCreated.getId()).toUri();
 
             return ResponseEntity.created(uri).body(creditCardCreated);
-        }
-        catch (RuntimeException e){
-            log.info(e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
     }
 }

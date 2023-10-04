@@ -1,5 +1,7 @@
 package com.galmv_.domain.exceptions.custom;
 
+import org.springframework.validation.Errors;
+
 import java.io.Serial;
 
 public class InvalidExpiryDateException extends RuntimeException{

@@ -16,20 +16,12 @@ public class CommonCreditCardValidator {
 
     public boolean validate(AddCreditCardDTO creditCard){
         return validateCreditCardCVV(creditCard.CVV()) &&
-                validateCreditCardPAN(creditCard.FAN()) &&
                 validateCreditCardExpiryDate(creditCard.expiryDate());
     }
 
     private boolean validateCreditCardCVV(String cvv) {
         if(cvv.length() != 3){
             throw new InvalidCVVException(Errors.INVALID_CVV_LENGTH);
-        }
-        return true;
-    }
-
-    private boolean validateCreditCardPAN(String pan){
-        if (pan.length() < 16 || pan.length() > 19){
-            throw new InvalidCreditCardFANException(Errors.INVALID_CREDIT_CARD_FAN_LENGTH);
         }
         return true;
     }
