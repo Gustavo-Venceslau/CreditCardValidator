@@ -2,7 +2,7 @@ package com.galmv_.domain.services;
 
 import com.galmv_.domain.constants.Errors;
 import com.galmv_.domain.entities.CreditCard;
-import com.galmv_.domain.CreditCardRepository;
+import com.galmv_.domain.repositories.CreditCardRepository;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
 import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
 import com.galmv_.domain.factories.CreditCardFactory;

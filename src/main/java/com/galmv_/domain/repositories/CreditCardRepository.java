@@ -1,4 +1,4 @@
-package com.galmv_.domain;
+package com.galmv_.domain.repositories;
 
 import com.galmv_.domain.entities.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;

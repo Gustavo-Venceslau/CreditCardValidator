@@ -1,15 +1,13 @@
 package creditCardValidatition.config;
 
 import com.galmv_.CreditCardApplication;
-import com.galmv_.domain.CreditCardRepository;
+import com.galmv_.domain.repositories.CreditCardRepository;
 import com.galmv_.domain.entities.CreditCard;
 import creditCardValidatition.factories.CreditCardFactory;
-import com.galmv_.domain.factories.CreditCardType;
+import com.galmv_.domain.enums.CreditCardType;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Arrays;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,

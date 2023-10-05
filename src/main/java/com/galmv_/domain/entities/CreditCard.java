@@ -1,5 +1,6 @@
 package com.galmv_.domain.entities;
 
+import com.galmv_.domain.dtos.AddCreditCardDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,4 +27,6 @@ public abstract class CreditCard {
     private String ownerName;
     @Column(nullable = false)
     private LocalDate expiryDate;
+
+    public abstract boolean validateCreditCard(AddCreditCardDTO creditCard);
 }

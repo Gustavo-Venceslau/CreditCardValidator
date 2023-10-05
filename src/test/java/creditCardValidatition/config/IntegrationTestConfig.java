@@ -1,7 +1,7 @@
 package creditCardValidatition.config;
 
 import com.galmv_.CreditCardApplication;
-import com.galmv_.domain.CreditCardRepository;
+import com.galmv_.domain.repositories.CreditCardRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
