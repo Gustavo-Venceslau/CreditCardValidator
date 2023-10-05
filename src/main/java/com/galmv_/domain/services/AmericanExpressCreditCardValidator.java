@@ -15,7 +15,7 @@ public class AmericanExpressCreditCardValidator {
 
     public boolean validate(AddCreditCardDTO creditCard){
         return validateCreditCardCVV(creditCard.CVV()) &&
-                validateCreditCardPANStartsWith(creditCard.FAN()) &&
+                validateCreditCardFANStartsWith(creditCard.FAN()) &&
                 validateCreditCardExpiryDate(creditCard.expiryDate());
     }
 
@@ -26,17 +26,43 @@ public class AmericanExpressCreditCardValidator {
         return true;
     }
 
-    private boolean validateCreditCardPANStartsWith(String pan) {
-        if(!(pan.startsWith("34") || pan.startsWith("37"))) {
+    private boolean validateCreditCardFANStartsWith(String fan) {
+        if(!(fan.startsWith("34") || fan.startsWith("37"))) {
             throw new InvalidCreditCardFANException(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
         }
-        return true ;
+        return validateFANNumberIsCorrect(fan);
+    }
+
+    // Luhn algorithm implementation
+    private boolean validateFANNumberIsCorrect(String fan) {
+        int digitsSum = 0;
+        boolean isSecond = false;
+
+        for(int index = fan.length() - 1; index >= 0; index--){
+            int digit = fan.charAt(index) - '0';
+
+            if(isSecond) digit *= 2;
+
+            digitsSum += digit / 10;
+            digitsSum += digit % 10;
+
+            isSecond = !isSecond;
+        }
+
+        System.out.println(digitsSum);
+
+        if(digitsSum % 10 != 0)
+            throw new InvalidCreditCardFANException(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
+
+        return true;
     }
 
     private boolean validateCreditCardExpiryDate(String expiryDate){
         LocalDate today = LocalDate.now();
 
         LocalDate convertedExpiryDate = ConvertExpiryDateToLocalDate.convert(expiryDate);
+
+        System.out.println(convertedExpiryDate);
 
         if(!convertedExpiryDate.isAfter(today)){
             throw new InvalidExpiryDateException(Errors.INVALID_EXPIRY_DATE);

@@ -9,7 +9,7 @@ public record AddCreditCardDTO
                 @Size(min = 3, max = 4, message = "The CVV field must have the correct length!")
                 String CVV,
                 @NotEmpty(message = "The FAN field cannot be empty!")
-                @Size(min = 16, max = 19, message = "The FAN field must have the correct length!")
+                @Size(min = 15, max = 19, message = "The FAN field must have the correct length!")
                 String FAN,
                 @NotEmpty(message = "The Owner Name field cannot be empty!")
                 String ownerName,

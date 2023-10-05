@@ -15,10 +15,11 @@ public class ConvertExpiryDateToCalendarTestConfig extends UnitTestConfig {
     @Test
     @DisplayName("should to be able to convert a string expiry date to a Calendar object expiry date")
     public void testSuccessConvertExpiryDate(){
-        String expiryDate = "08/29";
+        String expiryDate = "2029-08-01";
 
         LocalDate convertedExpiredDate = ConvertExpiryDateToLocalDate.convert(expiryDate);
 
         assertThat(convertedExpiredDate.getMonth()).isEqualTo(Month.AUGUST);
+        assertThat(convertedExpiredDate.getYear()).isEqualTo(2029);
     }
 }

@@ -2,10 +2,7 @@ package creditCardValidatition.creditCardTest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galmv_.domain.dtos.AddCreditCardDTO;
-import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
-import com.galmv_.domain.exceptions.custom.InvalidCVVException;
-import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
-import com.galmv_.domain.exceptions.custom.InvalidExpiryDateNumberException;
+import com.galmv_.domain.exceptions.custom.*;
 import com.galmv_.domain.services.AddCreditCardService;
 import creditCardValidatition.config.IntegrationTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +32,7 @@ public class AddCreditCardControllerTest extends IntegrationTestConfig {
         AddCreditCardDTO creditCardDTO = new
                 AddCreditCardDTO(
                         "1234",
-                        "3784533587163356",
+                        "3440215794378998",
                     "Gustavo de Almeida",
                     "2024-08-01",
                         "AMERICAN_EXPRESS_CARD");
@@ -85,7 +82,7 @@ public class AddCreditCardControllerTest extends IntegrationTestConfig {
         AddCreditCardDTO creditCardDTO = new
                 AddCreditCardDTO(
                 "1234",
-                "3784533587163356",
+                "3440215794378998",
                 "Gustavo de Almeida",
                 "2024-08-01",
                 "AMERICAN_EXPRESS_CARD"
@@ -137,7 +134,7 @@ public class AddCreditCardControllerTest extends IntegrationTestConfig {
         AddCreditCardDTO creditCardDTO = new
                 AddCreditCardDTO(
                         "1234",
-                        "378453358716335",
+                        "37845335871633",
                   "Gustavo de Almeida",
                     "2024-08-01",
                         "AMERICAN_EXPRESS_CARD"
@@ -156,13 +153,63 @@ public class AddCreditCardControllerTest extends IntegrationTestConfig {
     }
 
     @Test
+    @DisplayName("should not to able to add a new American Express credit card in /payment/creditCard if FAN number is invalid")
+    public void TestFailAddAmericanExpressCreditCardWithWrongFANNumber() throws Exception {
+
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO(
+                "1234",
+                "3784533587163355",
+                "Gustavo de Almeida",
+                "2024-08-01",
+                "AMERICAN_EXPRESS_CARD"
+        );
+
+        String creditCardDTOMapped = mapper.writeValueAsString(creditCardDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/payment/creditCard")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(creditCardDTOMapped)
+                )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidCreditCardFANException))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @DisplayName("should not to able to add a new common credit card in /payment/creditCard if FAN number is invalid")
+    public void TestFailAddCommonCreditCardWithWrongFANNumber() throws Exception {
+
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO(
+                "123",
+                "2720999989955577",
+                "Gustavo de Almeida",
+                "2024-08-01",
+                "COMMON_CREDIT_CARD"
+        );
+
+        String creditCardDTOMapped = mapper.writeValueAsString(creditCardDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/payment/creditCard")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(creditCardDTOMapped)
+                )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidCreditCardFANException))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
     @DisplayName("should not to able to add a new credit card in /payment/creditCard if expiry date is invalid")
     public void TestFailAddCreditCardWithWrongExpiryDate() throws Exception {
 
         AddCreditCardDTO creditCardDTO = new
                 AddCreditCardDTO(
                         "1234",
-                        "3784533587163356",
+                        "3440215794378998",
                     "Gustavo de Almeida",
                     "2019-08-01",
                         "AMERICAN_EXPRESS_CARD");

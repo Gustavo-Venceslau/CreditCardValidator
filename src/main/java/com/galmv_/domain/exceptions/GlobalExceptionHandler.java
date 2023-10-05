@@ -1,10 +1,7 @@
 package com.galmv_.domain.exceptions;
 
 import com.galmv_.domain.constants.Errors;
-import com.galmv_.domain.exceptions.custom.CreditCardAlreadyExistsException;
-import com.galmv_.domain.exceptions.custom.InvalidCVVException;
-import com.galmv_.domain.exceptions.custom.InvalidExpiryDateException;
-import com.galmv_.domain.exceptions.custom.InvalidExpiryDateNumberException;
+import com.galmv_.domain.exceptions.custom.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -84,6 +81,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new ExceptionResponse(
                         Errors.INVALID_CVV_LENGTH,
+                        LocalDateTime.now().toString(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        exception.getClass().toString(),
+                        errors
+                ), HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(InvalidCreditCardFANException.class)
+    public ResponseEntity<ExceptionResponse> handlerInvalidCreditCardFANException(InvalidCreditCardFANException exception){
+        Map<String, String> errors = new HashMap<>();
+
+        errors.put("FAN", exception.getMessage());
+
+        return new ResponseEntity<>(
+                new ExceptionResponse(
+                        Errors.INVALID_CREDIT_CARD_FAN_NUMBER,
                         LocalDateTime.now().toString(),
                         HttpStatus.BAD_REQUEST.value(),
                         exception.getClass().toString(),

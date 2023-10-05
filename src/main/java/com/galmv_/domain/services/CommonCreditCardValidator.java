@@ -16,6 +16,7 @@ public class CommonCreditCardValidator {
 
     public boolean validate(AddCreditCardDTO creditCard){
         return validateCreditCardCVV(creditCard.CVV()) &&
+                validateFANNumberIsCorrect(creditCard.FAN()) &&
                 validateCreditCardExpiryDate(creditCard.expiryDate());
     }
 
@@ -23,6 +24,27 @@ public class CommonCreditCardValidator {
         if(cvv.length() != 3){
             throw new InvalidCVVException(Errors.INVALID_CVV_LENGTH);
         }
+        return true;
+    }
+
+    // Luhn algorithm implementation
+    private boolean validateFANNumberIsCorrect(String fan) {
+        int digitsSum = 0;
+        boolean isSecond = false;
+
+        for(int index = fan.length() - 1; index >= 0; index--){
+            int digit = fan.charAt(index) - '0';
+
+            if(isSecond) digit *= 2;
+
+            digitsSum += digit / 10;
+            digitsSum += digit % 10;
+
+            isSecond = !isSecond;
+        }
+        if(digitsSum % 10 != 0)
+            throw new InvalidCreditCardFANException(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
+
         return true;
     }
 

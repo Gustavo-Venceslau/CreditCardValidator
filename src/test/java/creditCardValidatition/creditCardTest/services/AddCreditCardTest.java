@@ -37,7 +37,7 @@ public class AddCreditCardTest extends UnitTestConfig {
 
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("123", "2720999989955578", "Gustavo de Almeida", "2024-08-01", "COMMON_CREDIT_CARD");
+                AddCreditCardDTO("123", "3440215794378998", "Gustavo de Almeida", "2024-08-01", "COMMON_CREDIT_CARD");
 
         CreditCard creditCard = service.add(creditCardDTO);
 
@@ -48,7 +48,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     @DisplayName("should not to be able to add credit card if this one already exists")
     public void testFailAddCreditCardIfAlreadyExists(){
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3440215794378997", "Gustavo de Almeida", "2024-08-01", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("123", "5425233430109903", "Gustavo de Almeida", "2024-08-01", "COMMON_CREDIT_CARD");
 
         this.service.add(creditCardDTO);
 
@@ -61,6 +61,26 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddAmericanCreditCardWithWrongStartsWith(){
         AddCreditCardDTO creditCardDTO = new
                 AddCreditCardDTO("1234", "3640215794378997", "Gustavo de Almeida", "2024-08-01", "AMERICAN_EXPRESS_CARD");
+
+        assertThatExceptionOfType(InvalidCreditCardFANException.class).isThrownBy(() ->
+                service.add(creditCardDTO)).withMessage(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
+    }
+
+    @Test
+    @DisplayName("should not to be able to add american credit card if this one have wrong FAN number")
+    public void testFailAddAmericanExpressCreditCardWithWrongFANNumber(){
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO("1234", "3640215794378996", "Gustavo de Almeida", "2024-08-01", "AMERICAN_EXPRESS_CARD");
+
+        assertThatExceptionOfType(InvalidCreditCardFANException.class).isThrownBy(() ->
+                service.add(creditCardDTO)).withMessage(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
+    }
+
+    @Test
+    @DisplayName("should not to be able to add common credit card if this one have wrong FAN number")
+    public void testFailAddCommonCreditCardWithWrongFANNumber(){
+        AddCreditCardDTO creditCardDTO = new
+                AddCreditCardDTO("123", "5350044247779145", "Gustavo de Almeida", "2024-08-01", "COMMON_CREDIT_CARD");
 
         assertThatExceptionOfType(InvalidCreditCardFANException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_CREDIT_CARD_FAN_NUMBER);
@@ -83,7 +103,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddCreditCardWithWrongExpiryDate(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3440215794378996", "Gustavo de Almeida", "2019-08-01", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("1234", "372180165626375", "Gustavo de Almeida", "2019-08-01", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidExpiryDateException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE);
@@ -94,7 +114,7 @@ public class AddCreditCardTest extends UnitTestConfig {
     public void testFailAddCreditCardWithWrongExpiryDateNumber(){
 
         AddCreditCardDTO creditCardDTO = new
-                AddCreditCardDTO("1234", "3440215794378996", "Gustavo de Almeida", "2024-00-01", "AMERICAN_EXPRESS_CARD");
+                AddCreditCardDTO("1234", "3440215794378997", "Gustavo de Almeida", "2024-00-01", "AMERICAN_EXPRESS_CARD");
 
         assertThatExceptionOfType(InvalidExpiryDateNumberException.class).isThrownBy(() ->
                 service.add(creditCardDTO)).withMessage(Errors.INVALID_EXPIRY_DATE_NUMBER);
